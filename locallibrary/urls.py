@@ -32,12 +32,18 @@ urlpatterns += [
 from django.views.generic import RedirectView
 urlpatterns += [
     path('', RedirectView.as_view(url='catalog/', permanent=True)),
+<<<<<<< HEAD
     path('accounts/', include('django.contrib.auth.urls')),
+=======
+>>>>>>> ebfe817a5c8ea2db6d1563f279ca942a43db6cc6
 ]
 
 # Use static() to add URL mapping to serve static files like CSS, JavaScript, Images during development (only)
 from django.conf import settings
 from django.conf.urls.static import static
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ebfe817a5c8ea2db6d1563f279ca942a43db6cc6
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

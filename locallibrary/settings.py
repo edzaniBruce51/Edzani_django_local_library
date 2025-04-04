@@ -9,13 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import dj_database_url
-from pathlib import Path # type: ignore
-import os # type: ignore # needed by this code on Templates below: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-#import os # needed by this code on Templates below: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-#import os # needed by this code on Templates below: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-#import os # needed by this code on Templates below: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-            #'APP_DIRS': True,
+from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,20 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# Support env variables from .env file if defined
-#Note: Any values that you add to .env are likely to be secrets! You must not save them to GitHub, and you should add .env to your .gitignore file so that it is not added by accident
-import os
-from dotenv import load_dotenv # type: ignore
-env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
-load_dotenv(env_path)
-
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-ubd2-xdu!r3wu#i*3fmk0ucb8lv=7ajtq6my5j8$3(92v*vs8@'
-import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8_a+-$4w1f^lt3lx1c@d*p4x$ymm_rn7pwb87')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = []
@@ -98,20 +83,12 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
-# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mysite',    # Changed from 'mysite' to 'locallibrary'
+        'NAME': 'mysite',
         'USER': 'postgres',
-        'PASSWORD': 'EDZANi5*',  # Use your PostgreSQL password
+        'PASSWORD': 'EDZANi5*',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -166,24 +143,7 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #Note: We'll actually do the file serving using a library called WhiteNoise, which we install and configure in the next section
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Update database configuration from $DATABASE_URL environment variable (if defined)
-#Django will now use the database configuration in DATABASE_URL if the environment variable is set; otherwise it uses the default SQLite database. The value conn_max_age=500 makes the connection persistent, which is far more efficient than recreating the connection
-# on every request cycle (this is optional and can be removed if needed).
-#import dj_database_url # type: ignore
-
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
-
-#psycopg2
-#Django needs psycopg2 to work with Postgres databases. Install it locally so that it becomes part of our requirements for Railway to set up on the remote server:
-
-
